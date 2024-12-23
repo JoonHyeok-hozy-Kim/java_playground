@@ -1,16 +1,30 @@
 package cit594_waiver.chapters.ch19;
 
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
 public class GraphTest {
 
-    public static void main(String[] args) {
-        Graph g = new Graph();
-        Vertex joe = g.addVertex("Joe");
-        Vertex taj = g.addVertex("Taj");
-        Vertex chen = g.addVertex("Chen");
-        Vertex eva = g.addVertex("Eva");
-        Vertex lily = g.addVertex("Lily");
-        Vertex jun = g.addVertex("Jun");
-        Vertex ken = g.addVertex("Ken");
+    private Graph g;
+    private Vertex joe;
+    private Vertex taj;
+    private Vertex chen;
+    private Vertex eva;
+    private Vertex lily;
+    private Vertex jun;
+    private Vertex ken;
+
+    @Before
+    public void setup() {
+        g = new Graph();
+        joe = g.addVertex("Joe");
+        taj = g.addVertex("Taj");
+        chen = g.addVertex("Chen");
+        eva = g.addVertex("Eva");
+        lily = g.addVertex("Lily");
+        jun = g.addVertex("Jun");
+        ken = g.addVertex("Ken");
 
         g.addUndirectedEdge(joe, eva, 1);
         g.addUndirectedEdge(joe, taj, 3);
@@ -20,44 +34,35 @@ public class GraphTest {
         g.addUndirectedEdge(lily, jun, 4);
         g.addUndirectedEdge(chen, jun, 9);
         g.addUndirectedEdge(jun, ken, 2);
-
-        // // search the default way, using BFS
-        BFSTest(g, joe);
-
-        // // search a new way, using DFS
-        DFSTest(g, joe);
-
-        // // what about a new visitor that changes the labels of the vertices it sees?
-        AlphaTest(g, joe);
-
-        // what about a new Strategy that always explores the next vertex in the frontier based on the
-        // alphabetical ordering of their titles??
-        // g.setSearcher(???);
-        PQTest(g, joe);
-
-        System.out.println(g.nodeCount());
     }
 
-    public static void BFSTest(Graph g, Vertex start){
+    @Test
+    public void BFSTest(){
         System.out.println("[BFS Test]");
-        g.search(start, new PrintVisitor());
+        g.search(joe, new PrintVisitor());
+
+        assertEquals("Total 7 nodes", 7, g.nodeCount());
     }
 
-    public static void DFSTest(Graph g, Vertex start){
+    public void DFSTest(){
         System.out.println("[DFS Test]");
         g.setSearcher(new DFSearcher());
-        g.search(start, new PrintVisitor());
+
+        assertEquals("Total 7 nodes", 7, g.nodeCount());
     }
 
-    public static void AlphaTest(Graph g, Vertex start){
+    public void AlphaTest(){
         System.out.println("[Alpha Test]");
-        g.search(start, v -> v.label = v.label.toUpperCase());
-        g.search(start, new PrintVisitor());
+        g.search(joe, v -> v.label = v.label.toUpperCase());
+        
+        assertEquals("JOE", joe.label);
     }
 
-    public static void PQTest(Graph g, Vertex start){
+    public void PQTest(){
         System.out.println("[PQ Test]");
         g.setSearcher(new PQSearcher());
-        g.search(start, new PrintVisitor());
+        g.search(joe, new PrintVisitor());
+
+        assertEquals("Total 7 nodes", 7, g.nodeCount());
     }
 }
