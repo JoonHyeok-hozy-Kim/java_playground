@@ -39,7 +39,7 @@ public class GraphTest {
     @Test
     public void BFSTest(){
         System.out.println("[BFS Test]");
-        g.search(joe, new PrintVisitor());
+        // g.search(joe, new PrintVisitor());
 
         assertEquals("Total 7 nodes", 7, g.nodeCount());
     }

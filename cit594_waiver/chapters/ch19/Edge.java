@@ -1,6 +1,6 @@
 package cit594_waiver.chapters.ch19;
 
-public class Edge {
+public class Edge implements Comparable<Edge> {
     public Vertex fromVertex;
     public Vertex toVertex;
     public double weight;
@@ -18,5 +18,10 @@ public class Edge {
                 ", to=" + toVertex +
                 ", weight=" + weight +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Edge other){
+        return Double.compare(this.weight, other.weight);
     }
 }

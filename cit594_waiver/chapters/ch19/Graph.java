@@ -131,13 +131,17 @@ public class Graph {
         return visited;
     }
 
-    public int nodeCount(){
+    public Vertex getAnyVertex(){
         Set<Vertex> keySet = this.fromEdges.keySet();
         if (keySet.isEmpty()){
-            return 0;
+            return null;
         }
-        Vertex first = keySet.iterator().next();
-        List<Vertex> visited = this.search(first, null);
+        return keySet.iterator().next();
+    }
+
+    public int nodeCount(){
+        Vertex v = this.getAnyVertex();
+        List<Vertex> visited = this.search(v, null);
         // List<Vertex> visited = this.search(first, new PrintVisitor());
         return visited.size();
     }
