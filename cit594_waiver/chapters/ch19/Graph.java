@@ -117,7 +117,9 @@ public class Graph {
         while (!frontierQueue.isEmpty()) {
             Vertex current = frontierQueue.remove();
             visited.add(current);
-            visitor.visit(current);
+            if (visitor != null){
+                visitor.visit(current);
+            }
             for (Edge e : getEdgesFrom(current)) {
                 Vertex adjacent = e.toVertex;
                 if (!discovered.contains(adjacent)) {
@@ -127,5 +129,16 @@ public class Graph {
             }
         }
         return visited;
+    }
+
+    public int nodeCount(){
+        Set<Vertex> keySet = this.fromEdges.keySet();
+        if (keySet.isEmpty()){
+            return 0;
+        }
+        Vertex first = keySet.iterator().next();
+        List<Vertex> visited = this.search(first, null);
+        // List<Vertex> visited = this.search(first, new PrintVisitor());
+        return visited.size();
     }
 }

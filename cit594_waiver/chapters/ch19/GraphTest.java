@@ -34,6 +34,8 @@ public class GraphTest {
         // alphabetical ordering of their titles??
         // g.setSearcher(???);
         PQTest(g, joe);
+
+        System.out.println(g.nodeCount());
     }
 
     public static void BFSTest(Graph g, Vertex start){
